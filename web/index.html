@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>flutter_app</title>
 </head>
+
 <body>
   <script src="main.dart.js" type="application/javascript"></script>
+  <video autoplay hidden='true' controls id="video" style="position:absolute;z-index:9999"></video>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAzHgQNbBOwuSDv_5aJe_MUmTx-Om-uVaE",
+      authDomain: "sampleproj-9a14f.firebaseapp.com",
+      databaseURL: "https://sampleproj-9a14f.firebaseio.com",
+      projectId: "sampleproj-9a14f",
+      storageBucket: "sampleproj-9a14f.appspot.com",
+      messagingSenderId: "975587894454",
+      appId: "1:975587894454:web:010e1f3bdf6cb712213217",
+      measurementId: "G-HSXV07XH0Q"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </body>
+
 </html>

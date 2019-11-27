@@ -1,12 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_web/first_screen.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:flutter_app/first_screen.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:html' as html;
+import 'first_screen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -35,24 +39,36 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   VideoPlayerController playerController;
   var userInf;
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  //final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  //final GoogleSignIn googleSignIn = GoogleSignIn();
+  void playVideo(String atUrl) {
+    if (kIsWeb) {
+      final doc = html.window.document;
+      final v = doc.querySelector("#video");
+
+      if (v != null) {
+        v.hidden = false;
+        v.setInnerHtml('<source type="video/mp4" src="$atUrl">',
+            validator: html.NodeValidatorBuilder()
+              ..allowElement('source', attributes: ['src', 'type']));
+        final a = html.window.document.getElementById('triggerVideoPlayer');
+        if (a != null) {
+          a.dispatchEvent(html.MouseEvent('click'));
+        }
+      }
+    } else {
+      // we're not on the web platform
+      // and should use the video_player package
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (!kIsWeb) {
-      playerController = VideoPlayerController.network(
-          'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4')
-        // VideoPlayerController.asset('assets/videos/intro.mp4')
-        ..initialize()
-        ..setVolume(1.0).then(
-          (_) {
-            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-            setState(() {});
-          },
-        );
+    if (kIsWeb) {
+      playVideo(
+          'https://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_480_1_5MG.mp4');
     }
   }
 
@@ -108,27 +124,27 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (kIsWeb) {
-            return null;
-          }
-          setState(() {
-            playerController.value.isPlaying
-                ? playerController.pause()
-                : playerController.play();
-          });
-          print(playerController.play());
-        },
-        tooltip: 'Play/Pause',
-        child: kIsWeb
-            ? Icon(playerController.value.isPlaying
-                ? Icons.pause
-                : Icons.play_arrow)
-            : Container(
-                child: Text('It\'s web'),
-              ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     if (kIsWeb) {
+      //       return null;
+      //     }
+      //     setState(() {
+      //       playerController.value.isPlaying
+      //           ? playerController.pause()
+      //           : playerController.play();
+      //     });
+      //     print(playerController.play());
+      //   },
+      //   tooltip: 'Play/Pause',
+      //   child: kIsWeb
+      //       ? Icon(playerController.value.isPlaying
+      //           ? Icons.pause
+      //           : Icons.play_arrow)
+      //       : Container(
+      //           child: Text('It\'s web'),
+      //         ),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
@@ -136,19 +152,19 @@ class _MyHomePageState extends State<MyHomePage> {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
-        // if (!kIsWeb) {
-        signInWithGoogle().whenComplete(
-          () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return FirstScreen(userInf);
-                },
-              ),
-            );
-          },
-        );
-        // }
+        if (!kIsWeb) {
+          signInWithGoogle().whenComplete(
+            () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FirstScreen(userInf);
+                  },
+                ),
+              );
+            },
+          );
+        }
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
