@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final v = doc.querySelector("#video");
 
       if (v != null) {
-        v.hidden = false;
+        // v.hidden = false;
         v.setInnerHtml('<source type="video/mp4" src="$atUrl">',
             validator: html.NodeValidatorBuilder()
               ..allowElement('source', attributes: ['src', 'type']));
@@ -104,26 +104,43 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text('Web Render'),
+        title: Text('Webs Render'),
       ),
-      body: Column(
-        children: <Widget>[
-          Center(
-            child: AspectRatio(
-              aspectRatio: 18 / 9,
-              child: Container(
-                child: ((playerController != null && !kIsWeb)
-                    ? VideoPlayer(playerController)
-                    : Container()),
+      body: kIsWeb
+          ? Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Image.asset('assets/images/group.png'),
+                    ),
+                    Expanded(
+                      child: Text('data'),
+                    )
+                  ],
+                )
+              ],
+            )
+          : Container(
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: AspectRatio(
+                      aspectRatio: 18 / 9,
+                      child: Container(
+                        child: ((playerController != null && !kIsWeb)
+                            ? VideoPlayer(playerController)
+                            : Container()),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20.0),
+                    child: _signInButton(),
+                  ),
+                ],
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 20.0),
-            child: _signInButton(),
-          ),
-        ],
-      ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     if (kIsWeb) {
