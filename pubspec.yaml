@@ -62,6 +62,7 @@ flutter:
     - assets/images/group.png
     - assets/images/group1.png
     - assets/images/group2.png
+    - assets/images/groupHand.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
