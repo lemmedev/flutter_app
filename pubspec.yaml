@@ -28,6 +28,7 @@ dependencies:
   # For example, to use Firebase Authentication and Cloud Firestore
   firebase_auth: ^0.15.0+1
   google_sign_in: ^4.0.14
+  google_sign_in_web: ^0.8.0
 
   cloud_firestore: ^0.12.9+5
 
@@ -58,7 +59,9 @@ flutter:
 
   assets:
     - assets/videos/intro.mp4
-    - assets/images/group-2.png
+    - assets/images/group.png
+    - assets/images/group1.png
+    - assets/images/group2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

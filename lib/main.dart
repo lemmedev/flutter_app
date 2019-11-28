@@ -61,17 +61,36 @@ class _MyHomePageState extends State<MyHomePage> {
       // and should use the video_player package
     }
   }
-
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  
     if (kIsWeb) {
       playVideo(
           'https://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_480_1_5MG.mp4');
     }
   }
-
+Future<void> _handleSignIn() async {
+  try {
+   
+    GoogleSignInAccount g =  await _googleSignIn.signIn();;
+    print(g.email);
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text('Sign  In success with ${g.email}'),
+    ));
+  } catch (error) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text('Sign  In Failed'),
+    ));
+  }
+}
   Future<String> signInWithGoogle() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -107,20 +126,38 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Webs Render'),
       ),
       body: kIsWeb
-          ? Column(
-              children: <Widget>[
-                Row(
+          ?  
+                Stack(
                   children: <Widget>[
-                    Expanded(
-                      child: Image.asset('assets/images/group.png'),
+                    Positioned(
+                      width:MediaQuery.of(context).size.width*.5,
+                      top:0,
+                      bottom:0,
+                      left:0,
+                      child: Container(
+                        color:Colors.red,
+                        child: Image.asset('assets/images/group2.png',
+                        fit:BoxFit.cover
+                        ),
+                      ),
                     ),
-                    Expanded(
-                      child: Text('data'),
+                    Positioned(
+                      width:MediaQuery.of(context).size.width*.5,
+                      top:0,
+                      bottom:0,
+                      right:0,
+                      child: RaisedButton(
+                        child:Text("Login with googe"),
+                        onPressed: (){
+                          _handleSignIn();
+
+                        },
+                      ),
                     )
                   ],
                 )
-              ],
-            )
+              
+            
           : Container(
               child: Column(
                 children: <Widget>[
