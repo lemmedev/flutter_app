@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_app/sign-up.dart';
 // import 'package:flutter_app/first_screen.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(),
+        '/signup': (context) => SignUp(),
+      },
     );
   }
 }
@@ -39,6 +45,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   VideoPlayerController playerController;
+
+  var passwordVisible = false;
+  var _obsecureText = true;
   var userInf;
   //final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   //final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -69,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
-  var passwordVisible = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -122,7 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return 'signInWithGoogle succeeded: $user';
   }
 
-  var _obsecureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,140 +164,136 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Positioned(
-                          child: Form(
-                            key: _formKey,
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width -
-                                      MediaQuery.of(context).size.width * 0.94,
-                                  right: MediaQuery.of(context).size.width -
-                                      MediaQuery.of(context).size.width * 0.94,
-                                  top: 40.0,
-                                  bottom: 10.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Login',
-                                          textScaleFactor: 1.5,
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Container(
-                                        // color: Colors.red,
-
-                                        margin: EdgeInsets.only(left: 0),
-                                        alignment: Alignment.centerRight,
-                                        child: FlatButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(18.0),
-                                            side: BorderSide(
-                                                color: Color(0xffb4194b)),
-                                          ),
-                                          onPressed: () {},
-                                          child: Text('Guest'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    padding:
-                                        EdgeInsets.only(top: 10.0, bottom: 30),
-                                    child: Wrap(children: <Widget>[
-                                      Text(
-                                        'Use your username and password',
-                                        textScaleFactor: 1,
-                                      ),
-                                    ]),
-                                  ),
-                                  TextFormField(
-                                      decoration: InputDecoration(
-                                        labelText: 'Email',
-                                      ),
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Please enter your first name';
-                                        }
-                                      },
-                                      onSaved: (val) => null
-                                      // setState(() => _user.firstName = val),
-                                      ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: 'Password',
-                                      suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          // Update the state i.e. toogle the state of passwordVisible variable
-                                          setState(() {
-                                            passwordVisible = !passwordVisible;
-                                            _obsecureText = !_obsecureText;
-                                          });
-                                        },
-                                        child: Icon(
-                                          // Based on passwordVisible state choose the icon
-                                          passwordVisible
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                          color: Theme.of(context)
-                                              .primaryColorDark,
-                                        ),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width -
+                                    MediaQuery.of(context).size.width * 0.94,
+                                right: MediaQuery.of(context).size.width -
+                                    MediaQuery.of(context).size.width * 0.94,
+                                top: 40.0,
+                                bottom: 10.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Login',
+                                        textScaleFactor: 1.5,
                                       ),
                                     ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Please enter your first name';
-                                      }
-                                    },
-                                    onSaved: (val) => null,
-                                    obscureText: _obsecureText,
-                                    // setState(() => _user.firstName = val),
-                                  ),
-                                  Wrap(children: <Widget>[
+                                    Spacer(),
                                     Container(
+                                      // color: Colors.red,
+
+                                      margin: EdgeInsets.only(left: 0),
                                       alignment: Alignment.centerRight,
                                       child: FlatButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                          'Forgot Password',
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(18.0),
+                                          side: BorderSide(
+                                              color: Color(0xffb4194b)),
                                         ),
+                                        onPressed: () {},
+                                        child: Text('Guest'),
                                       ),
                                     ),
+                                  ],
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding:
+                                      EdgeInsets.only(top: 10.0, bottom: 30),
+                                  child: Wrap(children: <Widget>[
+                                    Text(
+                                      'Use your username and password',
+                                      textScaleFactor: 1,
+                                    ),
                                   ]),
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: FlatButton(
-                                          child: Text('Login'),
-                                          textColor: Colors.white,
-                                          color: Color(0xffb4194b),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0)),
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                    ],
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text('Dont have an account?'),
-                                      FlatButton(
-                                        child: Text('Sign up'),
-                                        textColor: Colors.blue,
-                                        onPressed: () {},
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
+                                  // setState(() => _user.firstName = val),
+                                ),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        // Update the state i.e. toogle the state of passwordVisible variable
+                                        setState(() {
+                                          passwordVisible = !passwordVisible;
+                                          _obsecureText = !_obsecureText;
+                                        });
+                                      },
+                                      child: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        passwordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
+                                      ),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter your first name';
+                                    }
+                                  },
+                                  onSaved: (val) => null,
+                                  obscureText: _obsecureText,
+                                  // setState(() => _user.firstName = val),
+                                ),
+                                Wrap(children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: FlatButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        'Forgot Password',
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      child: FlatButton(
+                                        child: Text('Login'),
+                                        textColor: Colors.white,
+                                        color: Color(0xffb4194b),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0)),
+                                        onPressed: () {
+                                          // Navigator.pushNamed(
+                                          //     context, '/signup');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Dont have an account?'),
+                                    FlatButton(
+                                      child: Text('Sign up'),
+                                      textColor: Colors.blue,
+                                      onPressed: () {},
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         )
@@ -354,15 +358,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onPressed: () {
         if (!kIsWeb) {
           signInWithGoogle().whenComplete(
-            () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return FirstScreen(userInf);
-                  },
-                ),
-              );
-            },
+            () {},
           );
         }
       },
