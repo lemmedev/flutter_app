@@ -235,11 +235,14 @@ class _SignUpState extends State<SignUp> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Text('Dont have an account?'),
-                                      FlatButton(
-                                        child: Text('Sign up'),
-                                        textColor: Colors.blue,
-                                        onPressed: () {},
+                                      Expanded(
+                                          child: Text('Dont have an account?')),
+                                      Expanded(
+                                        child: FlatButton(
+                                          child: Text('Sign up'),
+                                          textColor: Colors.blue,
+                                          onPressed: () {},
+                                        ),
                                       )
                                     ],
                                   )

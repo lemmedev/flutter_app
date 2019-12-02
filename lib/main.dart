@@ -275,8 +275,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                             borderRadius:
                                                 BorderRadius.circular(30.0)),
                                         onPressed: () {
-                                          // Navigator.pushNamed(
-                                          //     context, '/signup');
+                                          Navigator.pushNamed(
+                                              context, '/signup');
                                         },
                                       ),
                                     ),
@@ -285,11 +285,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Text('Dont have an account?'),
-                                    FlatButton(
-                                      child: Text('Sign up'),
-                                      textColor: Colors.blue,
-                                      onPressed: () {},
+                                    Expanded(
+                                      child: Text('Dont have an account?'),
+                                    ),
+                                    Expanded(
+                                      child: FlatButton(
+                                        child: Text('Sign up'),
+                                        textColor: Colors.blue,
+                                        onPressed: () {},
+                                      ),
                                     )
                                   ],
                                 )
